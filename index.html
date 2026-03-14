@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ucapan Nyepi 2026 | Saka 1948</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #f0d080;
+    --gold-pale: #f7e9b8;
+    --deep: #0a0705;
+    --dark: #110e08;
+    --cream: #f5ead0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, opacity 0.2s;
+    opacity: 0.5;
+  }
+
+  /* Canvas bg (Anti-lag particles) */
+  #bgCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  section { position: relative; z-index: 2; }
+
+  /* ===== HERO ===== */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-mandala {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 700px; height: 700px;
+    margin-left: -350px; margin-top: -350px;
+    animation: rotateMandala 60s linear infinite;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+  .hero-mandala-2 {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 500px; height: 500px;
+    margin-left: -250px; margin-top: -250px;
+    animation: rotateMandala 40s linear infinite reverse;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  @keyframes rotateMandala {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hero-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 8px 24px;
+    margin-bottom: 32px;
+    animation: fadeUp 1s ease both;
+    position: relative;
+  }
+
+  .hero-badge::before, .hero-badge::after {
+    content: '';
+    position: absolute;
+    top: 50%; width: 40px; height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+  .hero-badge::before { right: calc(100% + 12px); }
+  .hero-badge::after { left: calc(100% + 12px); }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(14px, 2vw, 18px);
+    font-style: italic;
+    color: var(--gold-pale);
+    opacity: 0.7;
+    letter-spacing: 0.15em;
+    animation: fadeUp 1s ease 0.2s both;
+    margin-bottom: 16px;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(38px, 8vw, 96px);
+    font-weight: 900;
+    line-height: 1.05;
+    background: linear-gradient(135deg, #f7e9b8 0%, #c9a84c 40%, #f0d080 70%, #c9a84c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeUp 1s ease 0.4s both;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 0 40px rgba(201,168,76,0.3));
+  }
+
+  .hero-title-2 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(14px, 3vw, 28px);
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    animation: fadeUp 1s ease 0.6s both;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+  }
+
+  .hero-divider {
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 40px;
+    animation: fadeUp 1s ease 0.8s both;
+  }
+
+  .hero-greeting {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 2.5vw, 22px);
+    line-height: 1.8;
+    color: var(--cream);
+    opacity: 0.85;
+    max-width: 600px;
+    animation: fadeUp 1s ease 1s both;
+    margin-bottom: 48px;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: fadeUp 1s ease 1.4s both;
+    opacity: 0.5;
+  }
+  .scroll-indicator span {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { transform: scaleY(1); opacity: 0.5; }
+    50% { transform: scaleY(0.6); opacity: 0.2; }
+  }
+
+  /* ===== SPARKS SHOWER (Anti Lag CSS) ===== */
+  .sparks-wrap {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    overflow: hidden;
+  }
+  .spark {
+    position: absolute;
+    bottom: -20px;
+    background: radial-gradient(circle, var(--gold-light) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: floatUp linear infinite;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  @keyframes floatUp {
+    0% { transform: translate3d(0, 0, 0); opacity: 0; }
+    20% { opacity: 0.8; }
+    80% { opacity: 0.5; }
+    100% { transform: translate3d(20px, -120vh, 0); opacity: 0; }
+  }
+
+  /* ===== COUNTDOWN ===== */
+  #countdown {
+    padding: 100px 20px;
+    text-align: center;
+    background: linear-gradient(180deg, transparent 0%, rgba(26,21,8,0.9) 30%, rgba(26,21,8,0.9) 70%, transparent 100%);
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 20px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(22px, 4vw, 42px);
+    background: linear-gradient(135deg, var(--gold-pale), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 60px;
+  }
+
+  .countdown-grid {
+    display: flex;
+    justify-content: center;
+    gap: clamp(16px, 4vw, 48px);
+    flex-wrap: wrap;
+  }
+
+  .countdown-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .countdown-ring {
+    width: clamp(80px, 15vw, 130px);
+    height: clamp(80px, 15vw, 130px);
+    position: relative;
+    margin-bottom: 12px;
+  }
+
+  .countdown-ring svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .countdown-ring circle {
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  .ring-bg { stroke: rgba(201,168,76,0.1); }
+  .ring-fill {
+    stroke: var(--gold);
+    stroke-dasharray: 283;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+    filter: drop-shadow(0 0 6px rgba(201,168,76,0.5));
+  }
+
+  .countdown-number {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(22px, 4vw, 38px);
+    font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+
+  .countdown-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--cream);
+    opacity: 0.5;
+  }
+
+  /* ===== INFO CATUR BRATA ===== */
+  #info {
+    padding: 100px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 10px;
+    margin-top: 60px;
+  }
+
+  .info-card {
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.12);
+    padding: 48px 30px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+  }
+
+  .info-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .info-card:hover { 
+    background: rgba(201,168,76,0.08); 
+    border-color: rgba(201,168,76,0.3);
+    transform: translateY(-5px); 
+  }
+  .info-card:hover::before { transform: scaleX(1); }
+
+  .info-icon {
+    width: 40px; height: 40px;
+    margin-bottom: 24px;
+    color: var(--gold);
+    opacity: 0.8;
+  }
+
+  .info-card-label {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.5;
+    margin-bottom: 12px;
+  }
+
+  .info-card-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--gold-light);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .info-card-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: var(--cream);
+    opacity: 0.7;
+    line-height: 1.8;
+  }
+
+  .info-card-accent {
+    position: absolute;
+    bottom: -20px; right: -20px;
+    width: 100px; height: 100px;
+    background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* ===== DECORATIVE STRIP ===== */
+  .deco-strip {
+    padding: 80px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .deco-strip-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    color: var(--gold);
+    opacity: 0.08;
+    line-height: 0.5;
+    position: absolute;
+    top: 0; left: -20px;
+    pointer-events: none;
+  }
+
+  .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 3.5vw, 32px);
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--cream);
+    opacity: 0.85;
+    padding: 0 40px;
+  }
+
+  .quote-source {
+    margin-top: 24px;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.5;
+  }
+
+  /* ===== RSVP (UBAH JADI KIRIM UCAPAN) ===== */
+  #rsvp {
+    padding: 100px 20px;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .rsvp-form {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .rsvp-input-wrap {
+    width: 100%;
+    position: relative;
+  }
+
+  .rsvp-input {
+    width: 100%;
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    padding: 18px 24px;
+    outline: none;
+    transition: border-color 0.3s, background 0.3s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .rsvp-input::placeholder { color: rgba(245,234,208,0.3); font-style: italic; }
+  .rsvp-input:focus { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+
+  .rsvp-btn {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    padding: 18px 48px;
+    cursor: none;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+
+  .rsvp-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.77,0,0.175,1);
+  }
+
+  .rsvp-btn:hover::before { transform: scaleX(1); }
+  .rsvp-btn:hover { color: var(--deep); }
+  .rsvp-btn span { position: relative; z-index: 1; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    padding: 80px 20px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  }
+
+  .footer-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(14px, 2.5vw, 20px);
+    color: var(--gold);
+    opacity: 0.8;
+    margin-bottom: 8px;
+  }
+
+  .footer-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--cream);
+    opacity: 0.4;
+    font-style: italic;
+  }
+
+  /* ===== OBSERVER ANIMATIONS ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* fadeUp */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Horizontal ornament line */
+  .ornament-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 48px 0;
+    opacity: 0.4;
+  }
+  .ornament-line span { flex: 1; max-width: 200px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .ornament-line span:last-child { background: linear-gradient(90deg, var(--gold), transparent); }
+  .ornament-diamond {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<canvas id="bgCanvas"></canvas>
+
+<div class="sparks-wrap" id="sparksWrap"></div>
+
+<section id="hero">
+  <svg class="hero-mandala" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="195" stroke="#c9a84c" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="160" stroke="#c9a84c" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="120" stroke="#c9a84c" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="80" stroke="#c9a84c" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="40" stroke="#c9a84c" stroke-width="0.5"/>
+    <g stroke="#c9a84c" stroke-width="0.5">
+      <line x1="5" y1="200" x2="395" y2="200"/>
+      <line x1="200" y1="5" x2="200" y2="395"/>
+      <line x1="56" y1="56" x2="344" y2="344"/>
+      <line x1="344" y1="56" x2="56" y2="344"/>
+    </g>
+  </svg>
+
+  <svg class="hero-mandala-2" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="190" stroke="#f0d080" stroke-width="0.8" stroke-dasharray="8 6"/>
+    <circle cx="200" cy="200" r="140" stroke="#f0d080" stroke-width="0.8" stroke-dasharray="4 8"/>
+    <circle cx="200" cy="200" r="90" stroke="#f0d080" stroke-width="0.8" stroke-dasharray="6 6"/>
+  </svg>
+
+  <div class="hero-badge">Rahajeng Nyanggra</div>
+  <div class="hero-subtitle">Tahun Baru Saka 1948</div>
+  <h1 class="hero-title">HARI RAYA NYEPI</h1>
+  <div class="hero-title-2">& Tahun Baru Saka</div>
+  <div class="hero-divider"></div>
+  <p class="hero-greeting">
+    Dalam keheningan sepi, kita kembalikan jiwa pada kemurnian.<br>
+    Mari temukan cahaya kedamaian di dalam diri saat <br>
+    <em style="color:var(--gold-light)">Catur Brata Penyepian</em> berlangsung.
+  </p>
+
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<section id="countdown">
+  <div class="section-label reveal">Menuju Hening</div>
+  <h2 class="section-title reveal reveal-delay-1">Catur Brata Penyepian</h2>
+
+  <div class="countdown-grid">
+    <div class="countdown-item reveal reveal-delay-1">
+      <div class="countdown-ring">
+        <svg viewBox="0 0 100 100">
+          <circle class="ring-bg" cx="50" cy="50" r="45"/>
+          <circle class="ring-fill" id="ring-days" cx="50" cy="50" r="45"/>
+        </svg>
+        <div class="countdown-number" id="days">00</div>
+      </div>
+      <div class="countdown-label">Hari</div>
+    </div>
+    <div class="countdown-item reveal reveal-delay-2">
+      <div class="countdown-ring">
+        <svg viewBox="0 0 100 100">
+          <circle class="ring-bg" cx="50" cy="50" r="45"/>
+          <circle class="ring-fill" id="ring-hours" cx="50" cy="50" r="45"/>
+        </svg>
+        <div class="countdown-number" id="hours">00</div>
+      </div>
+      <div class="countdown-label">Jam</div>
+    </div>
+    <div class="countdown-item reveal reveal-delay-3">
+      <div class="countdown-ring">
+        <svg viewBox="0 0 100 100">
+          <circle class="ring-bg" cx="50" cy="50" r="45"/>
+          <circle class="ring-fill" id="ring-minutes" cx="50" cy="50" r="45"/>
+        </svg>
+        <div class="countdown-number" id="minutes">00</div>
+      </div>
+      <div class="countdown-label">Menit</div>
+    </div>
+    <div class="countdown-item reveal reveal-delay-4">
+      <div class="countdown-ring">
+        <svg viewBox="0 0 100 100">
+          <circle class="ring-bg" cx="50" cy="50" r="45"/>
+          <circle class="ring-fill" id="ring-seconds" cx="50" cy="50" r="45"/>
+        </svg>
+        <div class="countdown-number" id="seconds">00</div>
+      </div>
+      <div class="countdown-label">Detik</div>
+    </div>
+  </div>
+</section>
+
+<section id="info">
+  <div style="text-align:center">
+    <div class="section-label reveal">Pedoman</div>
+    <h2 class="section-title reveal reveal-delay-1">Catur Brata Penyepian</h2>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card reveal reveal-delay-1">
+      <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" /></svg>
+      <div class="info-card-label">Larangan</div>
+      <div class="info-card-title">Amati Geni</div>
+      <div class="info-card-body">
+        Tidak menyalakan api, lampu, atau sumber cahaya lainnya. Membiarkan dunia beristirahat dalam gulita.
+      </div>
+      <div class="info-card-accent"></div>
+    </div>
+
+    <div class="info-card reveal reveal-delay-2">
+      <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" /></svg>
+      <div class="info-card-label">Larangan</div>
+      <div class="info-card-title">Amati Karya</div>
+      <div class="info-card-body">
+        Menghentikan segala aktivitas fisik dan kerja. Waktunya memfokuskan diri pada refleksi dan meditasi batin.
+      </div>
+      <div class="info-card-accent"></div>
+    </div>
+
+    <div class="info-card reveal reveal-delay-3">
+      <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
+      <div class="info-card-label">Larangan</div>
+      <div class="info-card-title">Amati Lelungan</div>
+      <div class="info-card-body">
+        Tidak bepergian ke luar rumah. Mengurangi interaksi duniawi untuk mendekatkan diri pada Sang Pencipta.
+      </div>
+      <div class="info-card-accent"></div>
+    </div>
+
+    <div class="info-card reveal reveal-delay-4">
+      <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.001 2.25v1.5m6 0v-1.5m-9 6h12m-12 0a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h12a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25m-12 0h12" /></svg>
+      <div class="info-card-label">Larangan</div>
+      <div class="info-card-title">Amati Lelanguan</div>
+      <div class="info-card-body">
+        Menghindari segala bentuk hiburan dan kesenangan indrawi yang dapat mendistraksi pikiran murni.
+      </div>
+      <div class="info-card-accent"></div>
+    </div>
+  </div>
+</section>
+
+<div class="deco-strip">
+  <div class="ornament-line reveal">
+    <span></span>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-diamond" style="opacity:0.5;transform:rotate(45deg) scale(0.6);"></div>
+    <div class="ornament-diamond"></div>
+    <span></span>
+  </div>
+
+  <div class="deco-strip-inner reveal">
+    <div class="quote-mark">"</div>
+    <p class="quote-text">
+      Dalam hening kita mendengar suara hati yang paling jujur. <br>
+      Dalam gelap kita melihat terang yang sejati. <br>
+      Rahajeng nyanggra Rahina Nyepi.
+    </p>
+    <div class="quote-source">-- Om Shanti Shanti Shanti Om --</div>
+  </div>
+
+  <div class="ornament-line reveal">
+    <span></span>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-diamond" style="opacity:0.5;transform:rotate(45deg) scale(0.6);"></div>
+    <div class="ornament-diamond"></div>
+    <span></span>
+  </div>
+</div>
+
+<section id="rsvp">
+  <div class="section-label reveal">Kirim Pesan</div>
+  <h2 class="section-title reveal reveal-delay-1">Kirimkan Doa & Harapan</h2>
+  <p class="reveal reveal-delay-2" style="font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.8;opacity:0.7;color:var(--cream);">
+    Sampaikan harapan damai untuk kerabat, <br>keluarga, dan semesta di Tahun Baru Saka ini.
+  </p>
+
+  <form class="rsvp-form reveal reveal-delay-3" onsubmit="handleWish(event)">
+    <div class="rsvp-input-wrap">
+      <input type="text" class="rsvp-input" placeholder="Nama Anda" id="wishName" required/>
+    </div>
+    <div class="rsvp-input-wrap">
+      <textarea class="rsvp-input" rows="3" placeholder="Tulis ucapan kedamaian..." id="wishMessage" style="resize:none;" required></textarea>
+    </div>
+    <button type="submit" class="rsvp-btn"><span>Kirim Harapan</span></button>
+  </form>
+
+  <div id="wishSuccess" style="display:none;margin-top:32px;font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold-light);font-style:italic;opacity:0;transition:opacity 0.6s;">
+    Pesan kedamaianmu telah tersampaikan. Om Shanti.
+  </div>
+</section>
+
+<footer>
+  <div class="ornament-line" style="margin-bottom:48px;">
+    <span></span>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-diamond" style="opacity:0.5;transform:rotate(45deg) scale(0.6);"></div>
+    <div class="ornament-diamond"></div>
+    <span></span>
+  </div>
+
+  <div class="footer-title">Kami dari keluarga Besar Kirana mengucapkan</div>
+  <div class="footer-sub">Selamat Menjalankan Catur Brata Penyepian</div>
+
+  <div style="margin-top:40px;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);opacity:0.25;">
+    Nyepi Saka 1948 -- Bali, Indonesia
+  </div>
+</footer>
+
+<script>
+(function(){
+  // ===== CUSTOM CURSOR =====
+  const cur = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cur.style.left = mx + 'px';
+    cur.style.top = my + 'px';
+  });
+
+  function animRing(){
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  // ===== CANVAS BG PARTICLES (SUPER BANYAK, TAPI ANTI LAG) =====
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  const PARTICLE_COUNT = 150; // Ditingkatkan drastis
+  let particles = [];
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function makeParticle(){
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.2 + 0.2,
+      vx: (Math.random() - 0.5) * 0.1,
+      vy: (Math.random() - 0.5) * 0.1,
+      a: Math.random() * 0.5 + 0.1,
+      blink: Math.random() * 0.02
+    };
+  }
+
+  for(let i = 0; i < PARTICLE_COUNT; i++) particles.push(makeParticle());
+
+  function drawParticles(){
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      // Efek kedip
+      p.a += p.blink;
+      if(p.a > 0.6 || p.a < 0.1) p.blink *= -1;
+      
+      ctx.fillStyle = `rgba(201,168,76,${p.a})`;
+      ctx.fill();
+      p.x += p.vx;
+      p.y += p.vy;
+      if(p.x < -5) p.x = W + 5;
+      if(p.x > W + 5) p.x = -5;
+      if(p.y < -5) p.y = H + 5;
+      if(p.y > H + 5) p.y = -5;
+    });
+  }
+
+  let lastTime = 0;
+  function loop(ts){
+    // Batasi 60fps biar super smooth tapi gak nyiksa CPU
+    if(ts - lastTime > 16){ 
+      drawParticles();
+      lastTime = ts;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  // ===== CSS SPARKS / KUNANG-KUNANG (HARDWARE ACCELERATED) =====
+  const sparksWrap = document.getElementById('sparksWrap');
+  for(let i = 0; i < 40; i++){
+    const p = document.createElement('div');
+    p.className = 'spark';
+    const size = Math.random() * 6 + 2;
+    p.style.cssText = `
+      left: ${Math.random()*100}%;
+      width: ${size}px;
+      height: ${size}px;
+      animation-duration: ${Math.random()*15 + 10}s;
+      animation-delay: ${Math.random()*10}s;
+    `;
+    sparksWrap.appendChild(p);
+  }
+
+  // ===== COUNTDOWN NYEPI 2026 (19 Maret 2026 06:00:00) =====
+  const targetDate = new Date("March 19, 2026 06:00:00").getTime();
+
+  function updateCount(){
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+
+    let d = 0, h = 0, m = 0, s = 0;
+    if(diff > 0){
+      d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      s = Math.floor((diff % (1000 * 60)) / 1000);
+    }
+
+    document.getElementById('days').innerText = d.toString().padStart(2, '0');
+    document.getElementById('hours').innerText = h.toString().padStart(2, '0');
+    document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
+    document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
+
+    // Update Rings (Total stroke-dasharray = 283)
+    document.getElementById('ring-days').style.strokeDashoffset = 283 - ((d / 365) * 283);
+    document.getElementById('ring-hours').style.strokeDashoffset = 283 - ((h / 24) * 283);
+    document.getElementById('ring-minutes').style.strokeDashoffset = 283 - ((m / 60) * 283);
+    document.getElementById('ring-seconds').style.strokeDashoffset = 283 - ((s / 60) * 283);
+  }
+  setInterval(updateCount, 1000);
+  updateCount();
+
+  // ===== SCROLL REVEAL =====
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // ===== FORM WISH SCRIPT =====
+  window.handleWish = function(e){
+    e.preventDefault();
+    document.querySelector('.rsvp-form').style.display = 'none';
+    const msg = document.getElementById('wishSuccess');
+    msg.style.display = 'block';
+    setTimeout(() => msg.style.opacity = '1', 50);
+  }
+})();
+</script>
+</body>
+</html>

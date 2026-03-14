@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSN IPA Master | Grade 5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: radial-gradient(circle, #0f172a 0%, #020617 100%);
+            --accent: #22d3ee;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --text: #f8fafc;
+        }
+        [data-theme='aqua'] {
+            --bg-main: linear-gradient(135deg, #a1eafb 0%, #60a5fa 100%);
+            --accent: #0369a1;
+            --glass-bg: rgba(255, 255, 255, 0.5);
+            --text: #0c4a6e;
+        }
+        [data-theme='candy'] {
+            --bg-main: linear-gradient(135deg, #ffd1ff 0%, #fbc2eb 100%);
+            --accent: #db2777;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --text: #831843;
+        }
+        body { 
+            background: var(--bg-main); 
+            min-height: 100vh; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            color: var(--text); 
+            transition: background 0.5s ease;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0; padding: 15px;
+        }
+        .glass { 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(25px); 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+        .option-btn { 
+            transition: all 0.2s ease; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: var(--text); 
+            background: rgba(255, 255, 255, 0.05);
+            width: 100%; text-align: left;
+        }
+        .option-btn:active { transform: scale(0.98); }
+        .correct { background: #10b981 !important; color: white !important; border-color: #059669 !important; }
+        .wrong { background: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
+        .theme-dot { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; border: 3px solid rgba(255,255,255,0.4); }
+        .theme-dot.active { border-color: var(--text); transform: scale(1.1); }
+    </style>
+</head>
+<body>
+
+    <div id="resume-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
+        <div class="glass max-w-sm w-full p-8 rounded-[2.5rem] text-center animate__animated animate__bounceIn">
+            <h3 class="text-xl font-black mb-2">Lanjut Simulasi IPA?</h3>
+            <p class="text-sm opacity-70 mb-8">Terakhir sampai nomor <span id="last-index-text" class="font-bold">0</span>.</p>
+            <div class="flex flex-col gap-3">
+                <button onclick="resumeQuiz()" class="py-4 bg-white/20 hover:bg-white/30 rounded-2xl font-bold transition-all">Lanjutkan</button>
+                <button onclick="restartFromScratch()" class="py-4 text-sm opacity-50">Ulang Awal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-container" class="w-full max-w-xl glass rounded-[2.5rem] p-6 md:p-10 flex flex-col min-h-[550px]">
+        <div class="flex justify-between items-center mb-6">
+            <span id="q-counter" class="text-[10px] font-black uppercase opacity-60 tracking-widest text-cyan-400">IPA SCIENCE MODE</span>
+            <span id="accuracy-box" class="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10">Score: 0</span>
+        </div>
+
+        <div class="w-full bg-black/10 h-1.5 rounded-full mb-8 overflow-hidden">
+            <div id="progress-bar" class="bg-cyan-400 h-full w-0 transition-all duration-500"></div>
+        </div>
+
+        <div id="game-area" class="flex-grow">
+            <div id="q-box" class="animate__animated">
+                <h2 id="q-text" class="text-lg font-bold mb-6 leading-relaxed"></h2>
+                <div id="options-grid" class="grid grid-cols-1 gap-3 mb-8"></div>
+            </div>
+        </div>
+
+        <div id="result-screen" class="hidden text-center py-6 animate__animated animate__zoomIn">
+            <h2 class="text-3xl font-black mb-4">Hasil Eksperimen 🔬</h2>
+            <div class="p-6 rounded-3xl bg-white/10 mb-6 border border-white/10">
+                <p id="final-score" class="text-5xl font-black mb-2 text-cyan-400">0%</p>
+                <p id="style-text" class="font-bold opacity-80 italic text-sm"></p>
+            </div>
+            <button onclick="restartFromScratch()" class="w-full py-4 rounded-2xl font-bold bg-cyan-500 text-white transition-all">Mulai Ulang</button>
+        </div>
+
+        <div class="mt-auto pt-6 border-t border-white/10 flex flex-col items-center gap-3">
+            <div class="flex gap-4">
+                <div id="dot-midnight" onclick="setTheme('midnight')" class="theme-dot bg-slate-900"></div>
+                <div id="dot-aqua" onclick="setTheme('aqua')" class="theme-dot bg-cyan-400"></div>
+                <div id="dot-candy" onclick="setTheme('candy')" class="theme-dot bg-pink-400"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questionsDB = [
+            { q: "Bagian darah yang berfungsi mengangkut oksigen ke seluruh tubuh adalah...", options: ["Plasma darah", "Sel darah merah", "Sel darah putih", "Keping darah"], cor: 1 },
+            { q: "Tumbuhan yang menyimpan cadangan makanan di umbi akar adalah...", options: ["Padi", "Singkong", "Pisang", "Tebu"], cor: 1 },
+            { q: "Alat pernapasan pada serangga disebut...", options: ["Paru-paru", "Insang", "Trakea", "Kulit"], cor: 2 },
+            { q: "Berikut ini yang merupakan contoh penguapan adalah...", options: ["Es menjadi air", "Air laut menjadi garam", "Uap menjadi embun", "Kapur barus mengecil"], cor: 1 },
+            { q: "Benda yang dapat ditarik kuat oleh magnet disebut...", options: ["Paramagnetik", "Diamagnetik", "Feromagnetik", "Nonmagnetik"], cor: 2 },
+            { q: "Katrol yang posisinya tidak berubah-ubah saat digunakan disebut katrol...", options: ["Bebas", "Tetap", "Majemuk", "Ganda"], cor: 1 },
+            { q: "Gaya yang dimanfaatkan saat kita mengasah pisau adalah gaya...", options: ["Pegas", "Otot", "Gesek", "Magnet"], cor: 2 },
+            { q: "Urutan rantai makanan yang benar di ekosistem sawah adalah...", options: ["Padi -> Tikus -> Ular -> Elang", "Padi -> Ular -> Tikus -> Elang", "Padi -> Elang -> Ular -> Tikus", "Padi -> Katak -> Tikus -> Elang"], cor: 0 },
+            { q: "Hewan yang berkembang biak dengan cara bertelur dan melahirkan disebut...", options: ["Ovipar", "Vivipar", "Ovovivipar", "Fragmentasi"], cor: 2 },
+            { q: "Cahaya merambat lurus dapat dibuktikan dengan peristiwa...", options: ["Terbentuknya pelangi", "Pensil terlihat patah di air", "Bayangan yang terbentuk saat cahaya terhalang", "Dasar kolam terlihat dangkal"], cor: 2 },
+            { q: "Organ yang berfungsi menawarkan racun dalam tubuh manusia adalah...", options: ["Jantung", "Ginjal", "Hati", "Paru-paru"], cor: 2 },
+            { q: "Proses penguapan air dari tumbuhan ke atmosfer disebut...", options: ["Evaporasi", "Transpirasi", "Kondensasi", "Presipitasi"], cor: 1 },
+            { q: "Bahan yang dapat menghantarkan panas dengan baik disebut...", options: ["Isolator", "Konduktor", "Radiator", "Kolektor"], cor: 1 },
+            { q: "Matahari tampak terbit di timur dan tenggelam di barat karena...", options: ["Revolusi bumi", "Rotasi bumi", "Revolusi bulan", "Rotasi bulan"], cor: 1 },
+            { q: "Hubungan antara benalu dan pohon inangnya adalah simbiosis...", options: ["Mutualisme", "Komensalisme", "Parasitisme", "Netralisme"], cor: 2 },
+            { q: "Planet yang paling dekat dengan matahari adalah...", options: ["Venus", "Mars", "Merkurius", "Bumi"], cor: 2 },
+            { q: "Lensa mata berfungsi untuk...", options: ["Memberi warna mata", "Mengatur cahaya masuk", "Memfokuskan cahaya ke retina", "Melindungi bola mata"], cor: 2 },
+            { q: "Berikut ini yang termasuk pesawat sederhana jenis tuas golongan pertama adalah...", options: ["Gerobak dorong", "Gunting", "Stapler", "Pinset"], cor: 1 },
+            { q: "Logam yang digunakan sebagai filamen pada lampu pijar adalah...", options: ["Tembaga", "Besi", "Tungsten", "Aluminium"], cor: 2 },
+            { q: "Kekurangan vitamin C dapat menyebabkan penyakit...", options: ["Rakititis", "Sariawan", "Anemia", "Rabun senja"], cor: 1 },
+            { q: "Peristiwa perpindahan panas tanpa melalui zat perantara disebut...", options: ["Konduksi", "Konveksi", "Radiasi", "Resonansi"], cor: 2 },
+            { q: "Alat yang digunakan untuk mengukur besar gaya adalah...", options: ["Termometer", "Barometer", "Dinamometer", "Mikrometer"], cor: 2 },
+            { q: "Bunyi tidak dapat merambat melalui...", options: ["Zat padat", "Zat cair", "Ruang hampa udara", "Gas"], cor: 2 },
+            { q: "Bagian bunga yang berfungsi sebagai alat kelamin jantan adalah...", options: ["Putik", "Benang sari", "Mahkota", "Kelopak"], cor: 1 },
+            { q: "Perubahan energi pada setrika listrik adalah...", options: ["Listrik menjadi gerak", "Listrik menjadi panas", "Listrik menjadi cahaya", "Listrik menjadi bunyi"], cor: 1 }
+        ];
+
+        // Tambahkan soal tambahan hingga 50 (IPA Fokus)
+        const ipaTopics = ["Ekosistem", "Magnet", "Tubuh", "Cahaya"];
+        while(questionsDB.length < 50) {
+            let i = questionsDB.length + 1;
+            questionsDB.push({
+                q: `[Latihan IPA] Soal No ${i}: Apa yang terjadi jika salah satu komponen pada rantai makanan punah?`,
+                options: ["Tidak berpengaruh", "Keseimbangan ekosistem terganggu", "Populasi lain tetap", "Ekosistem makin subur"],
+                cor: 1
+            });
+        }
+
+        let currentSet = [];
+        let currentIndex = 0;
+        let score = 0;
+        let canClick = true;
+
+        function setTheme(name) {
+            document.body.setAttribute('data-theme', name);
+            localStorage.setItem('userTheme', name);
+            document.querySelectorAll('.theme-dot').forEach(dot => dot.classList.remove('active'));
+            document.getElementById('dot-' + name).classList.add('active');
+        }
+        setTheme(localStorage.getItem('userTheme') || 'midnight');
+
+        function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
+
+        function checkSaveData() {
+            const savedIndex = localStorage.getItem('ipa_index');
+            const savedSet = localStorage.getItem('ipa_set');
+            const savedScore = localStorage.getItem('ipa_score');
+            if (savedIndex && savedIndex > 0 && savedIndex < 49) {
+                document.getElementById('last-index-text').innerText = parseInt(savedIndex) + 1;
+                document.getElementById('resume-modal').classList.remove('hidden');
+                currentSet = JSON.parse(savedSet);
+                score = parseInt(savedScore);
+                currentIndex = parseInt(savedIndex);
+            } else { startNewGame(); }
+        }
+
+        function startNewGame() {
+            currentSet = shuffle([...questionsDB]);
+            currentIndex = 0; score = 0;
+            saveProgress(); renderQuestion();
+        }
+
+        function resumeQuiz() {
+            document.getElementById('resume-modal').classList.add('hidden');
+            renderQuestion();
+        }
+
+        function restartFromScratch() {
+            localStorage.removeItem('ipa_index');
+            document.getElementById('resume-modal').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('game-area').classList.remove('hidden');
+            startNewGame();
+        }
+
+        function saveProgress() {
+            localStorage.setItem('ipa_index', currentIndex);
+            localStorage.setItem('ipa_score', score);
+            localStorage.setItem('ipa_set', JSON.stringify(currentSet));
+        }
+
+        function renderQuestion() {
+            canClick = true;
+            const qData = currentSet[currentIndex];
+            const qBox = document.getElementById('q-box');
+            qBox.classList.remove('animate__fadeInRight');
+            void qBox.offsetWidth; 
+            qBox.classList.add('animate__fadeInRight');
+
+            document.getElementById('q-counter').innerText = `SOAL ${currentIndex + 1}/50`;
+            document.getElementById('q-text').innerText = qData.q;
+            document.getElementById('accuracy-box').innerText = `Score: ${score}`;
+            
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+            qData.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn p-4 rounded-2xl font-bold text-sm';
+                btn.innerText = opt;
+                btn.onclick = () => checkAns(i, btn);
+                grid.appendChild(btn);
+            });
+            document.getElementById('progress-bar').style.width = `${(currentIndex / 50) * 100}%`;
+        }
+
+        function checkAns(idx, btn) {
+            if(!canClick) return;
+            canClick = false;
+            const correctIdx = currentSet[currentIndex].cor;
+            const allBtns = document.querySelectorAll('.option-btn');
+            if(idx === correctIdx) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                allBtns[correctIdx].classList.add('correct');
+            }
+            setTimeout(() => {
+                currentIndex++;
+                saveProgress();
+                if(currentIndex < 50) renderQuestion();
+                else showFinal();
+            }, 800);
+        }
+
+        function showFinal() {
+            localStorage.removeItem('ipa_index');
+            document.getElementById('game-area').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            const finalAcc = Math.round((score / 50) * 100);
+            document.getElementById('final-score').innerText = finalAcc + '%';
+            document.getElementById('style-text').innerText = finalAcc > 80 ? "Gaya Berpikir: Ilmuwan Muda 🧪" : "Gaya Berpikir: Penjelajah Alam 🌿";
+        }
+
+        checkSaveData();
+    </script>
+</body>
+</html>y
